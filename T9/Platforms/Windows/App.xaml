@@ -1,0 +1,9 @@
+﻿<maui:MauiWinUIApplication
+    x:Class="T9.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:T9.WinUI">
+
+</maui:MauiWinUIApplication>
+
