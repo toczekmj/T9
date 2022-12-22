@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Backend;
+
 namespace T9;
 
 public partial class MainPage : ContentPage
@@ -30,42 +31,42 @@ public partial class MainPage : ContentPage
 
             if (current_button == Btn_2)
             {
-                res = calculateLetter('a', 'b', 'c');
+                res = CalculateLetter('a', 'b', 'c', '2');
                 Btn_2.Text = "ABC";
             }
             else if (current_button == Btn_3)
             {
-                res = calculateLetter('d', 'e', 'f');
+                res = CalculateLetter('d', 'e', 'f', '3');
                 Btn_3.Text = "DEF";
             }
             else if (current_button == Btn_4)
             {
-                res = calculateLetter('g', 'h', 'i');
+                res = CalculateLetter('g', 'h', 'i', '4');
                 Btn_4.Text = "GHI";
             }
             else if (current_button == Btn_5)
             {
-                res = calculateLetter('j', 'k', 'l');
+                res = CalculateLetter('j', 'k', 'l', '5');
                 Btn_5.Text = "JKL";
             }
             else if (current_button == Btn_6)
             {
-                res = calculateLetter('m', 'n', 'o');
+                res = CalculateLetter('m', 'n', 'o', '6');
                 Btn_6.Text = "MNO";
             }
             else if (current_button == Btn_7)
             {
-                res = calculateLetter('p', 'q', 'r', 's');
+                res = CalculateLetter('p', 'q', 'r', 's', '7');
                 Btn_7.Text = "PQRS";
             }
             else if (current_button == Btn_8)
             {
-                res = calculateLetter('t', 'u', 'v');
+                res = CalculateLetter('t', 'u', 'v', '8');
                 Btn_8.Text = "TUV";
             }
             else if (current_button == Btn_9)
             {
-                res = calculateLetter('w', 'x', 'y', 'z');
+                res = CalculateLetter('w', 'x', 'y', 'z', '9');
                 Btn_9.Text = "WXYZ";
             }
             else
@@ -73,17 +74,13 @@ public partial class MainPage : ContentPage
                 res = "";
             }
 
-
-            label1.Text = clicks.ToString();
-
             editor1.Text += res;
             clicks = 0;
         }
     }
 
 
-
-    private void ButtonClicked(Button button, char a, char b, char c)
+    private void ButtonClicked(Button button, char a, char b, char c, char n)
     {
         if (sw.IsRunning)
         {
@@ -91,12 +88,11 @@ public partial class MainPage : ContentPage
             {
                 sw.Stop();
                 tr.Stop();
-                var res = calculateLetter(a, b, c);
+                var res = CalculateLetter(a, b, c, n);
                 editor1.Text += res;
                 current_button = button;
                 clicks = 0;
-                button.Text = string.Join(a, b, c).ToUpper();
-                label1.Text = clicks.ToString();
+                button.Text = $" ({Convert.ToInt32(n)}) " + string.Join(a, b, c).ToUpper();
                 return;
             }
             else
@@ -115,13 +111,12 @@ public partial class MainPage : ContentPage
             sw.Restart();
             tr.Start();
             clicks++;
-
         }
-        setButtonText(button, a, b, c);
-        label1.Text = clicks.ToString();
+
+        SetButtonText(button, a, b, c, n);
     }
 
-    private void ButtonClicked(Button button, char a, char b, char c, char d)
+    private void ButtonClicked(Button button, char a, char b, char c, char d, char n)
     {
         if (sw.IsRunning)
         {
@@ -129,22 +124,18 @@ public partial class MainPage : ContentPage
             {
                 sw.Stop();
                 tr.Stop();
-                var res = calculateLetter(a, b, c, d);
+                var res = CalculateLetter(a, b, c, d, n);
                 editor1.Text += res;
                 current_button = button;
                 clicks = 0;
-                button.Text = string.Join(a, b, c, d).ToUpper();
-                label1.Text = clicks.ToString();
+                button.Text = $" ({Convert.ToInt32(n)}) " + string.Join(a, b, c, d).ToUpper();
                 return;
             }
-            else
-            {
-                clicks++;
 
-                tr.Stop();
-                sw.Restart();
-                tr.Start();
-            }
+            clicks++;
+            tr.Stop();
+            sw.Restart();
+            tr.Start();
         }
         else
         {
@@ -153,109 +144,139 @@ public partial class MainPage : ContentPage
             sw.Restart();
             tr.Start();
             clicks++;
-
         }
-        setButtonText(button, a, b, c, d);
-        label1.Text = clicks.ToString();
+
+        SetButtonText(button, a, b, c, d, n);
     }
 
-    private void setButtonText(Button button, char a, char b, char c)
+    private void SetButtonText(Button button, char a, char b, char c, char n)
     {
-        var temp = clicks % 6;
-        if (temp == 1) button.Text = a.ToString();
-        else if (temp == 2) button.Text = b.ToString();
-        else if (temp == 3) button.Text = c.ToString();
-        else if (temp == 4) button.Text = a.ToString().ToUpper();
-        else if (temp == 5) button.Text = b.ToString().ToUpper();
-        else if (temp == 0) button.Text = c.ToString().ToUpper();
+        var temp = clicks % 7;
+        button.Text = temp switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            3 => c.ToString(),
+            4 => a.ToString().ToUpper(),
+            5 => b.ToString().ToUpper(),
+            6 => c.ToString().ToUpper(),
+            0 => n.ToString(),
+            _ => button.Text
+        };
     }
 
-    private void setButtonText(Button button, char a, char b, char c, char d)
+    private void SetButtonText(Button button, char a, char b, char c, char d, char n)
     {
-        var temp = clicks % 8;
-        if (temp == 1) button.Text = a.ToString();
-        else if (temp == 2) button.Text = b.ToString();
-        else if (temp == 3) button.Text = c.ToString();
-        else if (temp == 4) button.Text = d.ToString();
-        else if (temp == 5) button.Text = a.ToString().ToUpper();
-        else if (temp == 6) button.Text = b.ToString().ToUpper();
-        else if (temp == 7) button.Text = c.ToString().ToUpper();
-        else if (temp == 0) button.Text = d.ToString().ToUpper();
+        var temp = clicks % 9;
+        button.Text = temp switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            3 => c.ToString(),
+            4 => d.ToString(),
+            5 => a.ToString().ToUpper(),
+            6 => b.ToString().ToUpper(),
+            7 => c.ToString().ToUpper(),
+            8 => d.ToString().ToUpper(),
+            0 => n.ToString(),
+            _ => button.Text
+        };
     }
 
-    private string calculateLetter(char a, char b, char c)
+    private string CalculateLetter(char a, char b, char c, char n)
     {
-        var cl = clicks % 6;
-        if (cl == 1) return a.ToString();
-        if (cl == 2) return b.ToString();
-        if (cl == 3) return c.ToString();
-        if (cl == 4) return a.ToString().ToUpper();
-        if (cl == 5) return b.ToString().ToUpper();
-        return c.ToString().ToUpper();
+        var cl = clicks % 7;
+        return cl switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            3 => c.ToString(),
+            4 => a.ToString().ToUpper(),
+            5 => b.ToString().ToUpper(),
+            6 => c.ToString().ToUpper(),
+            _ => n.ToString(),
+        };
     }
 
-    private string calculateLetter(char a, char b, char c, char d)
+    private string CalculateLetter(char a, char b, char c, char d, char n)
     {
-        var cl = clicks % 8;
-        if (cl == 1) return a.ToString();
-        if (cl == 2) return b.ToString();
-        if (cl == 3) return c.ToString();
-        if (cl == 4) return d.ToString();
-        if (cl == 5) return a.ToString().ToUpper();
-        if (cl == 6) return b.ToString().ToUpper();
-        if (cl == 7) return c.ToString().ToUpper();
-        return d.ToString().ToUpper();
+        var cl = clicks % 9;
+        return cl switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            3 => c.ToString(),
+            4 => d.ToString(),
+            5 => a.ToString().ToUpper(),
+            6 => b.ToString().ToUpper(),
+            7 => c.ToString().ToUpper(),
+            8 => d.ToString().ToUpper(),
+            _ => n.ToString()
+        };
     }
 
-    void Btn_1_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_1_Clicked(System.Object sender, System.EventArgs e)
     {
         editor1.Text += "1";
     }
 
-    void Btn_2_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_2_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_2, 'a', 'b', 'c');
+        ButtonClicked(Btn_2, 'a', 'b', 'c', '2');
     }
 
-    void Btn_3_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_3_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_3, 'd', 'e', 'f');
+        ButtonClicked(Btn_3, 'd', 'e', 'f', '3');
     }
 
-    void Btn_4_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_4_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_4, 'g', 'h', 'i');
+        ButtonClicked(Btn_4, 'g', 'h', 'i', '4');
     }
 
-    void Btn_5_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_5_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_5, 'j', 'k', 'l');
+        ButtonClicked(Btn_5, 'j', 'k', 'l', '5');
     }
 
-    void Btn_6_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_6_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_6, 'm', 'n', 'o');
+        ButtonClicked(Btn_6, 'm', 'n', 'o', '6');
     }
 
-    void Btn_7_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_7_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_7, 'p', 'q', 'r', 's');
+        ButtonClicked(Btn_7, 'p', 'q', 'r', 's', '7');
     }
 
-    void Btn_8_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_8_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_8, 't', 'u', 'v');
+        ButtonClicked(Btn_8, 't', 'u', 'v', '8');
     }
 
-    void Btn_9_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_9_Clicked(System.Object sender, System.EventArgs e)
     {
-        ButtonClicked(Btn_9, 'w', 'x', 'y', 'z');
+        ButtonClicked(Btn_9, 'w', 'x', 'y', 'z', '9');
     }
 
-    void editor1_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    void Btn_10_Clicked(System.Object sender, System.EventArgs e)
     {
+        editor1.Text += "*";
+    }
 
+    void Btn_0_Clicked(System.Object sender, System.EventArgs e)
+    {
+        //ButtonClicked(Btn_0, " ", "0");
+    }
+
+    void Btn_11_Clicked(System.Object sender, System.EventArgs e)
+    {
+        editor1.Text += "#";
+    }
+
+
+    private void editor1_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
     }
 }
-
-

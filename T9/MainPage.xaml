@@ -10,20 +10,8 @@
             VerticalOptions="End"
             HorizontalOptions="Center">
 
-            <Label Text="Frame wrapped around a Label" x:Uid="label_1" x:Name="label1" />
-
-
-            
-            <Frame BorderColor="Gray"
-                CornerRadius="10">
-                <Editor
-                x:Name="outputEditor"
-                HeightRequest="100"
-                TextChanged="editor1_TextChanged"
-                IsSpellCheckEnabled="False"
-                IsTextPredictionEnabled="False"
-                    />
-            </Frame>
+    
+       
 
 
 
@@ -43,7 +31,6 @@
 
             <HorizontalStackLayout
                 Spacing="10">
-
                 <Button
                     x:Name="Btn_1"
                     Clicked="Btn_1_Clicked"
@@ -54,7 +41,8 @@
                 <Button
                     x:Name="Btn_2"
                     Clicked="Btn_2_Clicked"
-                    Text="ABC"
+                    LineBreakMode="WordWrap"
+                    Text=" (2) ABC"
                     CharacterSpacing="1"
                     WidthRequest="70"
                     HeightRequest="70"
@@ -62,7 +50,8 @@
                 <Button
                     x:Name="Btn_3"
                     Clicked="Btn_3_Clicked"
-                    Text="DEF"
+                    LineBreakMode="WordWrap"
+                    Text=" (3) DEF"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
@@ -73,21 +62,24 @@
                 <Button
                     x:Name="Btn_4"
                     Clicked="Btn_4_Clicked"
-                    Text="GHI"
+                    Text=" (4) GHI"
+                    LineBreakMode="WordWrap"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
                 <Button
                     x:Name="Btn_5"
                     Clicked="Btn_5_Clicked"
-                    Text="JKL"
+                    Text=" (5) JKL"
+                    LineBreakMode="WordWrap"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
                 <Button
                     x:Name="Btn_6"
                     Clicked="Btn_6_Clicked"
-                    Text="MNO"
+                    Text=" (6) MNO"
+                    LineBreakMode="WordWrap"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
@@ -97,21 +89,49 @@
                 <Button
                     x:Name="Btn_7"
                     Clicked="Btn_7_Clicked"
-                    Text="PQRS"
+                    Text=" (7) PQRS"
+                    LineBreakMode="WordWrap"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
                 <Button
                     x:Name="Btn_8"
                     Clicked="Btn_8_Clicked"
-                    Text="TUV"
+                    Text=" (8) TUV"
+                    LineBreakMode="WordWrap"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
                 <Button
                     x:Name="Btn_9"
                     Clicked="Btn_9_Clicked"
-                    Text="WXYZ"
+                    Text=" (9) WXYZ"
+                    LineBreakMode="WordWrap"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout
+                Spacing="10">
+                <Button
+                    x:Name="Btn_10"
+                    Clicked="Btn_10_Clicked"
+                    Text="*"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_0"
+                    Clicked="Btn_0_Clicked"
+                    LineBreakMode="WordWrap"
+                    Text="    0  SPACE "
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_11"
+                    Clicked="Btn_11_Clicked"
+                    Text="#"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
