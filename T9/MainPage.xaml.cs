@@ -28,11 +28,7 @@ public partial class MainPage : ContentPage
             tr.Stop();
             string res;
 
-            if(current_button == Btn_1)
-            {
-                res = "";
-            }
-            else if (current_button == Btn_2)
+            if (current_button == Btn_2)
             {
                 res = calculateLetter('a', 'b', 'c');
                 Btn_2.Text = "ABC";
@@ -67,7 +63,7 @@ public partial class MainPage : ContentPage
                 res = calculateLetter('t', 'u', 'v');
                 Btn_8.Text = "TUV";
             }
-            else if(current_button == Btn_9)
+            else if (current_button == Btn_9)
             {
                 res = calculateLetter('w', 'x', 'y', 'z');
                 Btn_9.Text = "WXYZ";
@@ -76,8 +72,8 @@ public partial class MainPage : ContentPage
             {
                 res = "";
             }
-            
-            
+
+
             label1.Text = clicks.ToString();
 
             editor1.Text += res;
@@ -85,13 +81,13 @@ public partial class MainPage : ContentPage
         }
     }
 
-    
+
 
     private void ButtonClicked(Button button, char a, char b, char c)
     {
-        if (sw.IsRunning) //kolejne klikniecie
+        if (sw.IsRunning)
         {
-            if (sw.ElapsedMilliseconds > 1000) //KONIEC
+            if (sw.ElapsedMilliseconds > 1000)
             {
                 sw.Stop();
                 tr.Stop();
@@ -112,7 +108,7 @@ public partial class MainPage : ContentPage
                 tr.Start();
             }
         }
-        else //pierewsze klikniecie 
+        else
         {
             current_button = button;
             tr.Stop();
@@ -127,9 +123,9 @@ public partial class MainPage : ContentPage
 
     private void ButtonClicked(Button button, char a, char b, char c, char d)
     {
-        if (sw.IsRunning) //kolejne klikniecie
+        if (sw.IsRunning)
         {
-            if (sw.ElapsedMilliseconds > 1000) //KONIEC
+            if (sw.ElapsedMilliseconds > 1000)
             {
                 sw.Stop();
                 tr.Stop();
@@ -150,7 +146,7 @@ public partial class MainPage : ContentPage
                 tr.Start();
             }
         }
-        else //pierewsze klikniecie 
+        else
         {
             current_button = button;
             tr.Stop();
@@ -165,41 +161,55 @@ public partial class MainPage : ContentPage
 
     private void setButtonText(Button button, char a, char b, char c)
     {
-        var temp = clicks % 3;
+        var temp = clicks % 6;
         if (temp == 1) button.Text = a.ToString();
         else if (temp == 2) button.Text = b.ToString();
-        else if (temp == 0) button.Text = c.ToString();
+        else if (temp == 3) button.Text = c.ToString();
+        else if (temp == 4) button.Text = a.ToString().ToUpper();
+        else if (temp == 5) button.Text = b.ToString().ToUpper();
+        else if (temp == 0) button.Text = c.ToString().ToUpper();
     }
 
     private void setButtonText(Button button, char a, char b, char c, char d)
     {
-        var temp = clicks % 4;
+        var temp = clicks % 8;
         if (temp == 1) button.Text = a.ToString();
         else if (temp == 2) button.Text = b.ToString();
         else if (temp == 3) button.Text = c.ToString();
-        else if (temp == 0) button.Text = d.ToString();
+        else if (temp == 4) button.Text = d.ToString();
+        else if (temp == 5) button.Text = a.ToString().ToUpper();
+        else if (temp == 6) button.Text = b.ToString().ToUpper();
+        else if (temp == 7) button.Text = c.ToString().ToUpper();
+        else if (temp == 0) button.Text = d.ToString().ToUpper();
     }
 
     private string calculateLetter(char a, char b, char c)
     {
-        var cl = clicks % 3;
+        var cl = clicks % 6;
         if (cl == 1) return a.ToString();
         if (cl == 2) return b.ToString();
-        return c.ToString();
+        if (cl == 3) return c.ToString();
+        if (cl == 4) return a.ToString().ToUpper();
+        if (cl == 5) return b.ToString().ToUpper();
+        return c.ToString().ToUpper();
     }
 
     private string calculateLetter(char a, char b, char c, char d)
     {
-        var cl = clicks % 4;
+        var cl = clicks % 8;
         if (cl == 1) return a.ToString();
         if (cl == 2) return b.ToString();
         if (cl == 3) return c.ToString();
-        return d.ToString();
+        if (cl == 4) return d.ToString();
+        if (cl == 5) return a.ToString().ToUpper();
+        if (cl == 6) return b.ToString().ToUpper();
+        if (cl == 7) return c.ToString().ToUpper();
+        return d.ToString().ToUpper();
     }
 
     void Btn_1_Clicked(System.Object sender, System.EventArgs e)
     {
-        editor1.Text += " ";
+        editor1.Text += "1";
     }
 
     void Btn_2_Clicked(System.Object sender, System.EventArgs e)
