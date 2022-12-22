@@ -48,4 +48,15 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Trie\Backend.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Resources\Raw\wordlist.10000.txt" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Raw\wordlist.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </BundleResource>
+	</ItemGroup>
 </Project>

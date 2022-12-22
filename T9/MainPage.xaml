@@ -1,41 +1,125 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:t9="clr-namespace:T9"
              x:Class="T9.MainPage">
 
-    <ScrollView>
+    <ScrollView
+        Padding="30">
         <VerticalStackLayout
             Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="End"
+            HorizontalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+            <Label Text="Frame wrapped around a Label" x:Uid="label_1" x:Name="label1" />
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+            
+            <Frame BorderColor="Gray"
+                CornerRadius="10">
+                <Editor
+                x:Name="outputEditor"
+                HeightRequest="100"
+                TextChanged="editor1_TextChanged"
+                IsSpellCheckEnabled="False"
+                IsTextPredictionEnabled="False"
+                    />
+            </Frame>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
 
+
+            <Frame BorderColor="Gray"
+                CornerRadius="10">
+                <Editor
+                x:Name="editor1"
+                HeightRequest="100"
+                TextChanged="editor1_TextChanged"
+                IsSpellCheckEnabled="False"
+                IsTextPredictionEnabled="False"
+                    />
+            </Frame>
+
+
+
+
+            <HorizontalStackLayout
+                Spacing="10">
+
+                <Button
+                    x:Name="Btn_1"
+                    Clicked="Btn_1_Clicked"
+                    Text="1"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_2"
+                    Clicked="Btn_2_Clicked"
+                    Text="ABC"
+                    CharacterSpacing="1"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_3"
+                    Clicked="Btn_3_Clicked"
+                    Text="DEF"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout
+                Spacing="10">
+
+                <Button
+                    x:Name="Btn_4"
+                    Clicked="Btn_4_Clicked"
+                    Text="GHI"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_5"
+                    Clicked="Btn_5_Clicked"
+                    Text="JKL"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_6"
+                    Clicked="Btn_6_Clicked"
+                    Text="MNO"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout
+                Spacing="10">
+                <Button
+                    x:Name="Btn_7"
+                    Clicked="Btn_7_Clicked"
+                    Text="PQRS"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_8"
+                    Clicked="Btn_8_Clicked"
+                    Text="TUV"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+                <Button
+                    x:Name="Btn_9"
+                    Clicked="Btn_9_Clicked"
+                    Text="WXYZ"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    />
+            </HorizontalStackLayout>
         </VerticalStackLayout>
+
+
+
     </ScrollView>
 
 </ContentPage>

@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/toczekmj/Projects/T9/Trie/Trie.csproj",
+      "projectUniqueName": "/Users/toczekmj/Projects/T9/Trie/Backend.csproj",
       "projectName": "Trie",
-      "projectPath": "/Users/toczekmj/Projects/T9/Trie/Trie.csproj",
+      "projectPath": "/Users/toczekmj/Projects/T9/Trie/Backend.csproj",
       "packagesPath": "/Users/toczekmj/.nuget/packages/",
       "outputPath": "/Users/toczekmj/Projects/T9/Trie/obj/",
       "projectStyle": "PackageReference",
