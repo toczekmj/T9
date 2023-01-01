@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Backend;
+
 namespace T9;
 
 public partial class MainPage : ContentPage
@@ -8,16 +9,30 @@ public partial class MainPage : ContentPage
     private Trie _trie;
     private readonly Stopwatch sw;
     private readonly IDispatcherTimer tr;
-    private int clicks = 0;
-    private Button current_button;
+    private const string _URL = "https://toczekmj.github.io/wordlist.html";
+    private int _clicks = 0;
+    private Button _currentButton;
+    private List<string> _dict;
 
     public MainPage()
     {
         InitializeComponent();
+        InitializeTrie();
         sw = new Stopwatch();
         tr = Application.Current.Dispatcher.CreateTimer();
         tr.Interval = TimeSpan.FromMilliseconds(10);
         tr.Tick += (s, e) => CheckForLastLetter();
+    }
+
+    private async void InitializeTrie()
+    {
+        _trie = new Trie();
+        await using var stream = await FileSystem.OpenAppPackageFileAsync("wordlist.txt");
+        using var reader = new StreamReader(stream);
+        var s = await reader.ReadToEndAsync();
+        _dict = s.Split('\n').ToList();
+        _trie.AddCollection(_dict);
+
     }
 
     private void CheckForLastLetter()
@@ -28,59 +43,55 @@ public partial class MainPage : ContentPage
             tr.Stop();
             string res;
 
-            if (current_button == Btn_2)
+            if (_currentButton == Btn_2)
             {
-                res = calculateLetter('a', 'b', 'c');
-                Btn_2.Text = "ABC";
+                res = CalculateLetter('a', 'b', 'c');
+                Btn_2.Text = " (2) ABC";
             }
-            else if (current_button == Btn_3)
+            else if (_currentButton == Btn_3)
             {
-                res = calculateLetter('d', 'e', 'f');
-                Btn_3.Text = "DEF";
+                res = CalculateLetter('d', 'e', 'f');
+                Btn_3.Text = " (3) DEF";
             }
-            else if (current_button == Btn_4)
+            else if (_currentButton == Btn_4)
             {
-                res = calculateLetter('g', 'h', 'i');
-                Btn_4.Text = "GHI";
+                res = CalculateLetter('g', 'h', 'i');
+                Btn_4.Text = " (4) GHI";
             }
-            else if (current_button == Btn_5)
+            else if (_currentButton == Btn_5)
             {
-                res = calculateLetter('j', 'k', 'l');
-                Btn_5.Text = "JKL";
+                res = CalculateLetter('j', 'k', 'l');
+                Btn_5.Text = " (5) JKL";
             }
-            else if (current_button == Btn_6)
+            else if (_currentButton == Btn_6)
             {
-                res = calculateLetter('m', 'n', 'o');
-                Btn_6.Text = "MNO";
+                res = CalculateLetter('m', 'n', 'o');
+                Btn_6.Text = " (6) MNO";
             }
-            else if (current_button == Btn_7)
+            else if (_currentButton == Btn_7)
             {
-                res = calculateLetter('p', 'q', 'r', 's');
-                Btn_7.Text = "PQRS";
+                res = CalculateLetter('p', 'q', 'r', 's');
+                Btn_7.Text = " (7) PQRS";
             }
-            else if (current_button == Btn_8)
+            else if (_currentButton == Btn_8)
             {
-                res = calculateLetter('t', 'u', 'v');
-                Btn_8.Text = "TUV";
+                res = CalculateLetter('t', 'u', 'v');
+                Btn_8.Text = " (8) TUV";
             }
-            else if (current_button == Btn_9)
+            else if (_currentButton == Btn_9)
             {
-                res = calculateLetter('w', 'x', 'y', 'z');
-                Btn_9.Text = "WXYZ";
+                res = CalculateLetter('w', 'x', 'y', 'z');
+                Btn_9.Text = " (9) WXYZ";
             }
             else
             {
                 res = "";
             }
 
-
-            label1.Text = clicks.ToString();
-
             editor1.Text += res;
-            clicks = 0;
+            _clicks = 0;
         }
     }
-
 
 
     private void ButtonClicked(Button button, char a, char b, char c)
@@ -91,17 +102,16 @@ public partial class MainPage : ContentPage
             {
                 sw.Stop();
                 tr.Stop();
-                var res = calculateLetter(a, b, c);
+                var res = CalculateLetter(a, b, c);
                 editor1.Text += res;
-                current_button = button;
-                clicks = 0;
+                _currentButton = button;
+                _clicks = 0;
                 button.Text = string.Join(a, b, c).ToUpper();
-                label1.Text = clicks.ToString();
                 return;
             }
             else
             {
-                clicks++;
+                _clicks++;
 
                 tr.Stop();
                 sw.Restart();
@@ -110,15 +120,14 @@ public partial class MainPage : ContentPage
         }
         else
         {
-            current_button = button;
+            _currentButton = button;
             tr.Stop();
             sw.Restart();
             tr.Start();
-            clicks++;
-
+            _clicks++;
         }
-        setButtonText(button, a, b, c);
-        label1.Text = clicks.ToString();
+
+        SetButtonText(button, a, b, c);
     }
 
     private void ButtonClicked(Button button, char a, char b, char c, char d)
@@ -129,133 +138,156 @@ public partial class MainPage : ContentPage
             {
                 sw.Stop();
                 tr.Stop();
-                var res = calculateLetter(a, b, c, d);
+                var res = CalculateLetter(a, b, c, d);
                 editor1.Text += res;
-                current_button = button;
-                clicks = 0;
+                _currentButton = button;
+                _clicks = 0;
                 button.Text = string.Join(a, b, c, d).ToUpper();
-                label1.Text = clicks.ToString();
                 return;
             }
-            else
-            {
-                clicks++;
 
-                tr.Stop();
-                sw.Restart();
-                tr.Start();
-            }
-        }
-        else
-        {
-            current_button = button;
+            _clicks++;
             tr.Stop();
             sw.Restart();
             tr.Start();
-            clicks++;
-
         }
-        setButtonText(button, a, b, c, d);
-        label1.Text = clicks.ToString();
+        else
+        {
+            _currentButton = button;
+            tr.Stop();
+            sw.Restart();
+            tr.Start();
+            _clicks++;
+        }
+
+        SetButtonText(button, a, b, c, d);
     }
 
-    private void setButtonText(Button button, char a, char b, char c)
+    private void SetButtonText(Button button, char a, char b, char c)
     {
-        var temp = clicks % 6;
-        if (temp == 1) button.Text = a.ToString();
-        else if (temp == 2) button.Text = b.ToString();
-        else if (temp == 3) button.Text = c.ToString();
-        else if (temp == 4) button.Text = a.ToString().ToUpper();
-        else if (temp == 5) button.Text = b.ToString().ToUpper();
-        else if (temp == 0) button.Text = c.ToString().ToUpper();
+        var temp = _clicks % 3;
+        button.Text = temp switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            0 => c.ToString(),
+            _ => button.Text
+        };
     }
 
-    private void setButtonText(Button button, char a, char b, char c, char d)
+    private void SetButtonText(Button button, char a, char b, char c, char d)
     {
-        var temp = clicks % 8;
-        if (temp == 1) button.Text = a.ToString();
-        else if (temp == 2) button.Text = b.ToString();
-        else if (temp == 3) button.Text = c.ToString();
-        else if (temp == 4) button.Text = d.ToString();
-        else if (temp == 5) button.Text = a.ToString().ToUpper();
-        else if (temp == 6) button.Text = b.ToString().ToUpper();
-        else if (temp == 7) button.Text = c.ToString().ToUpper();
-        else if (temp == 0) button.Text = d.ToString().ToUpper();
+        var temp = _clicks % 4;
+        button.Text = temp switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            3 => c.ToString(),
+            0 => d.ToString(),
+            _ => button.Text
+        };
     }
 
-    private string calculateLetter(char a, char b, char c)
+    private string CalculateLetter(char a, char b, char c)
     {
-        var cl = clicks % 6;
-        if (cl == 1) return a.ToString();
-        if (cl == 2) return b.ToString();
-        if (cl == 3) return c.ToString();
-        if (cl == 4) return a.ToString().ToUpper();
-        if (cl == 5) return b.ToString().ToUpper();
-        return c.ToString().ToUpper();
+        var cl = _clicks % 3;
+        return cl switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            _ => c.ToString(),
+        };
     }
 
-    private string calculateLetter(char a, char b, char c, char d)
+    private string CalculateLetter(char a, char b, char c, char d)
     {
-        var cl = clicks % 8;
-        if (cl == 1) return a.ToString();
-        if (cl == 2) return b.ToString();
-        if (cl == 3) return c.ToString();
-        if (cl == 4) return d.ToString();
-        if (cl == 5) return a.ToString().ToUpper();
-        if (cl == 6) return b.ToString().ToUpper();
-        if (cl == 7) return c.ToString().ToUpper();
-        return d.ToString().ToUpper();
+        var cl = _clicks % 4;
+        return cl switch
+        {
+            1 => a.ToString(),
+            2 => b.ToString(),
+            3 => c.ToString(),
+            _ => d.ToString(),
+        };
     }
 
-    void Btn_1_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_1_Clicked(System.Object sender, System.EventArgs e)
     {
         editor1.Text += "1";
     }
 
-    void Btn_2_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_2_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_2, 'a', 'b', 'c');
     }
 
-    void Btn_3_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_3_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_3, 'd', 'e', 'f');
     }
 
-    void Btn_4_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_4_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_4, 'g', 'h', 'i');
     }
 
-    void Btn_5_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_5_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_5, 'j', 'k', 'l');
     }
 
-    void Btn_6_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_6_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_6, 'm', 'n', 'o');
     }
 
-    void Btn_7_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_7_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_7, 'p', 'q', 'r', 's');
     }
 
-    void Btn_8_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_8_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_8, 't', 'u', 'v');
     }
 
-    void Btn_9_Clicked(System.Object sender, System.EventArgs e)
+    private void Btn_9_Clicked(System.Object sender, System.EventArgs e)
     {
         ButtonClicked(Btn_9, 'w', 'x', 'y', 'z');
     }
 
-    void editor1_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    void Btn_10_Clicked(System.Object sender, System.EventArgs e)
     {
+        editor1.Text += "*";
+    }
+
+    private void Btn_0_Clicked(System.Object sender, System.EventArgs e)
+    {
+        //ButtonClicked(Btn_0, " ", "0");
+       
+
+    }
+
+    void Btn_11_Clicked(System.Object sender, System.EventArgs e)
+    {
+        editor1.Text += "#";
+    }
+
+    private async void editor1_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        Console.WriteLine($"Text changed: {editor1.Text}");
+        if(string.IsNullOrEmpty(editor1.Text))
+            return;
+        
+        
+        var lastword = editor1.Text.Split(' ').Last();
+        var suggestions = _trie.GetSuggestions(lastword);
+        triePreview.Text = "";
+        foreach (var word in suggestions)
+        {
+            triePreview.Text += $"{word}\n";
+        }
+        Console.WriteLine();
 
     }
 }
-
-
