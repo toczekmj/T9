@@ -10,9 +10,26 @@
             VerticalOptions="End"
             HorizontalOptions="Center">
 
-    
+            
+            <ListView x:Name="LView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell>
+                            
+                        </TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
        
-
+            <Frame BorderColor="Gray"
+                CornerRadius="10">
+                <Editor
+                x:Name="triePreview"
+                HeightRequest="100"
+                IsSpellCheckEnabled="False"
+                IsTextPredictionEnabled="False"
+                    />
+            </Frame>
 
 
             <Frame BorderColor="Gray"
@@ -34,7 +51,7 @@
                 <Button
                     x:Name="Btn_1"
                     Clicked="Btn_1_Clicked"
-                    Text="1"
+                    Text="Del"
                     WidthRequest="70"
                     HeightRequest="70"
                     />
